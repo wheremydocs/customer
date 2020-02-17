@@ -13,11 +13,9 @@ import java.util.UUID;
 @Data
 @Entity
 @Audited
-public class Customer extends AbstractEntity {
+public class Customer extends AuditableEntity {
 
   @Id
   @GeneratedValue
   private UUID id;
-
-
 }

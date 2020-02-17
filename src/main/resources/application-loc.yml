@@ -1,0 +1,18 @@
+server:
+  port: 8800
+
+spring:
+  jpa:
+    properties:
+      org:
+        hibernate:
+          envers:
+            default_schema: audit
+
+      hibernate:
+        show_sql: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer
+    username: postgres
+    password: 8yR13
