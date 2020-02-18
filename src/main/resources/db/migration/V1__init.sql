@@ -8,9 +8,6 @@ CREATE TABLE public.customer (
   username text,
   email text,
   gender public.gender_type,
-  blocked boolean,
-  admin boolean,
-  premium boolean,
   created timestamp without time zone,
   modified timestamp without time zone
 );

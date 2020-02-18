@@ -15,9 +15,6 @@ CREATE TABLE audit.customer_aud
     username text,
     email    text,
     gender   public.gender_type,
-    blocked  boolean,
-    admin    boolean,
-    premium  boolean,
     created  timestamp without time zone,
     modified timestamp without time zone,
     constraint pk_customer_aud primary key (id, rev)
