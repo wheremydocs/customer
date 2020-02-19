@@ -2,6 +2,8 @@ package com.everydocs.customer.service;
 
 import com.everydocs.customer.domain.Customer;
 import com.everydocs.customer.repository.CustomerRepository;
+import com.everydocs.customer.repository.specification.CustomerByIdsSp;
+import com.everydocs.customer.repository.specification.CustomerByQuerySp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +31,12 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Override
   public Page<Customer> find(CustomerSearch search, Pageable page) {
-    // TODO use specification pattern
-    return Page.empty();
+    if (search == null) {
+      return rep.findAll(page);
+    }
+    CustomerByIdsSp customerByIdsSp = new CustomerByIdsSp(search.getIds());
+    CustomerByQuerySp customerByQuerySp = new CustomerByQuerySp(search.getQuery());
+    return rep.findAll(customerByIdsSp.and(customerByQuerySp), page);
   }
 
   @Override

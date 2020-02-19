@@ -23,6 +23,17 @@ repositories {
     mavenCentral()
 }
 
+sourceSets {
+    'integration-test' {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+        resources.srcDir file('src/integration-test/resources')
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -38,8 +49,23 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    integrationTestImplementation "org.testcontainers:testcontainers:1.12.5"
+    integrationTestImplementation 'org.postgresql:postgresql'
 }
 
 test {
     useJUnitPlatform()
+    systemProperty 'spring.profiles.active', 'test'
 }
+
+
+task integrationTest(type: Test) {
+    systemProperty 'spring.profiles.active', 'test'
+    testClassesDirs = sourceSets.'integration-test'.output.classesDirs
+    classpath = sourceSets.'integration-test'.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test

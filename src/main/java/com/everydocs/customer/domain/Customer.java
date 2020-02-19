@@ -4,6 +4,7 @@ import com.everydocs.customer.domain.type.Gender;
 import com.everydocs.customer.domain.type.PostgresSQLEnumType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.envers.Audited;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
+@FieldNameConstants
 @Data
 @Entity
 @Audited
