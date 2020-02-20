@@ -17,6 +17,13 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    integrationTestImplementation {
+        extendsFrom implementation
+    }
+    integrationTestRuntimeOnly {
+        extendsFrom runtimeOnly
+    }
 }
 
 repositories {
@@ -50,8 +57,9 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
+    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
     integrationTestImplementation "org.testcontainers:testcontainers:1.12.5"
-    integrationTestImplementation 'org.postgresql:postgresql'
+    integrationTestImplementation "org.testcontainers:postgresql:1.12.5"
 }
 
 test {
