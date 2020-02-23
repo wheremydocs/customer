@@ -11,12 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
@@ -47,17 +49,38 @@ public class CustomerController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<CustomerDto> updateCustomer(@PathVariable UUID id, @RequestBody CustomerDto dto) {
+  public ResponseEntity<CustomerDto> updateCustomer(
+      @PathVariable UUID id, @RequestBody CustomerDto dto) {
     Customer customer = service.findById(id).orElse(null);
     if (customer == null) {
       return ResponseEntity.notFound().build();
     }
 
-    //prevent using wrong id from body
+    // prevent using wrong id from body
     dto.setId(id);
 
     customer = service.save(mapper.toEntity(dto, customer));
     return ResponseEntity.ok(mapper.toDto(customer));
   }
 
+  @PostMapping
+  public ResponseEntity<CustomerDto> createCustomer(@RequestBody @Valid @NotNull CustomerDto dto) {
+    if (service.existsByUsername(dto.getUsername())) {
+      return ResponseEntity.badRequest().build();
+    }
+
+    dto.setId(null);
+
+    Customer customer = service.save(mapper.toEntity(dto));
+    return ResponseEntity.ok(mapper.toDto(customer));
+  }
+
+  @GetMapping("/exists")
+  public ResponseEntity<Void> existsCustomer(@Valid CustomerSearch search) {
+    if (service.exists(search)) {
+      return ResponseEntity.ok().build();
+    } else {
+      return ResponseEntity.notFound().build();
+    }
+  }
 }

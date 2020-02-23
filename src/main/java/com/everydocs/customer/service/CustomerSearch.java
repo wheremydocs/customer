@@ -13,4 +13,6 @@ public class CustomerSearch {
   private Collection<UUID> ids;
 
   private String query;
+
+  private String username;
 }

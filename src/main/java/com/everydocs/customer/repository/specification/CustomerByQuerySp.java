@@ -24,10 +24,10 @@ public class CustomerByQuerySp implements Specification<Customer> {
 
     List<Predicate> predicates = new ArrayList<>();
 
-    String startWith = query + "%";
+    String startWith = query.strip().toLowerCase() + "%";
 
-    predicates.add(cb.like(r.get(Customer.Fields.username), startWith));
-    predicates.add(cb.like(r.get(Customer.Fields.email), startWith));
+    predicates.add(cb.like(cb.lower(r.get(Customer.Fields.username)), startWith));
+    predicates.add(cb.like(cb.lower(r.get(Customer.Fields.email)), startWith));
 
     return predicates.isEmpty() ? null : cb.or(predicates.toArray(Predicate[]::new));
   }

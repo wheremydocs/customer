@@ -12,5 +12,9 @@ public interface CustomerService {
 
   Page<Customer> find(CustomerSearch search, Pageable page);
 
+  boolean exists(CustomerSearch search);
+
+  boolean existsByUsername(String username);
+
   Customer save(Customer customer);
 }
