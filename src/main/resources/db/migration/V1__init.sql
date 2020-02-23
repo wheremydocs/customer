@@ -5,7 +5,7 @@ create type public.gender_type as enum (
 
 CREATE TABLE public.customer (
   id uuid PRIMARY KEY,
-  username text,
+  username text unique,
   email text,
   gender public.gender_type,
   created timestamp without time zone,

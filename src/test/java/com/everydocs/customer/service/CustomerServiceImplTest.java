@@ -3,11 +3,15 @@ package com.everydocs.customer.service;
 import com.everydocs.customer.domain.Customer;
 import com.everydocs.customer.repository.CustomerRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -93,5 +97,109 @@ class CustomerServiceImplTest {
 
     // Then
     assertTrue(customer.isEmpty());
+  }
+
+  @Test
+  void find_nullSearch_notNull() {
+    // Given
+    CustomerRepository repository = mock(CustomerRepository.class);
+    when(repository.findAll(Pageable.unpaged())).thenReturn(Page.empty());
+
+    CustomerServiceImpl service = new CustomerServiceImpl(repository);
+
+    // When
+    Page<Customer> result = service.find(null, Pageable.unpaged());
+
+    // Then
+    assertTrue(result.isEmpty());
+  }
+
+  @Test
+  void exists_null_searchAll() {
+    // Given
+    CustomerRepository repository = mock(CustomerRepository.class);
+    when(repository.count()).thenReturn(1L);
+    CustomerServiceImpl service = new CustomerServiceImpl(repository);
+
+    // When
+    boolean result = service.exists(null);
+
+    // Then
+    assertTrue(result);
+  }
+
+  @Test
+  @SuppressWarnings("unchecked")
+  void exists_notNull_withSpecification() {
+    // Given
+    CustomerSearch search = new CustomerSearch();
+    search.setUsername("test123");
+
+    CustomerRepository repository = mock(CustomerRepository.class);
+    when(repository.count(any(Specification.class))).thenReturn(1L);
+    CustomerServiceImpl service = new CustomerServiceImpl(repository);
+
+    // When
+    boolean result = service.exists(search);
+
+    // Then
+    assertTrue(result);
+  }
+
+  @Test
+  void existsByUsername_null_false() {
+    // Given
+    CustomerServiceImpl service = new CustomerServiceImpl(null);
+
+    // When
+    boolean result = service.existsByUsername(null);
+
+    // Then
+    assertFalse(result);
+  }
+
+  @Test
+  void existsByUsername_upperCase_caseInsensitive() {
+    // Given
+    String input = "UserName";
+    CustomerRepository repository = mock(CustomerRepository.class);
+    when(repository.existsByUsername("username")).thenReturn(true);
+    CustomerServiceImpl service = new CustomerServiceImpl(repository);
+
+    // When
+    boolean result = service.existsByUsername(input);
+
+    // Then
+    assertTrue(result);
+  }
+
+  @Test
+  void existsByUsername_withWhitespace_trim() {
+    // Given
+    String input = "    username1    ";
+    CustomerRepository repository = mock(CustomerRepository.class);
+    when(repository.existsByUsername("username1")).thenReturn(true);
+    CustomerServiceImpl service = new CustomerServiceImpl(repository);
+
+    // When
+    boolean result = service.existsByUsername(input);
+
+    // Then
+    assertTrue(result);
+  }
+
+  @Test
+  void existsByUsername_upperWithWhitespace_true() {
+    // Given
+    String input = "   \n UserName2  ";
+    CustomerRepository repository = mock(CustomerRepository.class);
+    when(repository.existsByUsername("username2")).thenReturn(true);
+    CustomerServiceImpl service = new CustomerServiceImpl(repository);
+
+    // When
+    boolean result = service.existsByUsername(input);
+
+    // Then
+    assertTrue(result);
   }
 }
