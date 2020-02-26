@@ -24,4 +24,15 @@ public class ApplicationIntegrationTest extends AbstractIntegrationTest {
     int status = mvcResult.getResponse().getStatus();
     assertEquals(HttpStatus.OK, HttpStatus.resolve(status));
   }
+
+  @Test
+  public void swagger() throws Exception {
+    //Given
+    //When
+    MvcResult mvcResult = mvc.perform(get("/v2/api-docs")).andReturn();
+
+    //Then
+    int status = mvcResult.getResponse().getStatus();
+    assertEquals(HttpStatus.OK, HttpStatus.resolve(status));
+  }
 }
