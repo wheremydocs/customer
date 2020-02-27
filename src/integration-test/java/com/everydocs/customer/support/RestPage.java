@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RestResponsePage<T> extends PageImpl<T> {
+public class RestPage<T> extends PageImpl<T> {
 
   private static final long serialVersionUID = 3248189030448292002L;
 
   @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-  public RestResponsePage(
+  public RestPage(
       @JsonProperty("content") List<T> content,
       @JsonProperty("number") int number,
       @JsonProperty("size") int size,
@@ -31,15 +31,15 @@ public class RestResponsePage<T> extends PageImpl<T> {
     super(content, PageRequest.of(number, size), totalElements);
   }
 
-  public RestResponsePage(List<T> content, Pageable pageable, long total) {
+  public RestPage(List<T> content, Pageable pageable, long total) {
     super(content, pageable, total);
   }
 
-  public RestResponsePage(List<T> content) {
+  public RestPage(List<T> content) {
     super(content);
   }
 
-  public RestResponsePage() {
+  public RestPage() {
     super(new ArrayList<>());
   }
 }

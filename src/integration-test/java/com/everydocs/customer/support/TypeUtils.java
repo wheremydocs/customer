@@ -9,9 +9,8 @@ public class TypeUtils {
     };
   }
 
-  public static <T> TypeReference<RestResponsePage<T>> pageTypeRef() {
+  public static <T> TypeReference<RestPage<T>> pageTypeRef() {
     return new TypeReference<>() {
     };
   }
-
 }
