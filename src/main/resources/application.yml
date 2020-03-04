@@ -19,3 +19,17 @@ spring:
           envers:
             default_schema: audit
     database: postgresql
+
+  cloud:
+    consul:
+      enabled: true
+      discovery:
+        enabled: true
+        register-health-check: true
+        health-check-path: /actuator/health
+        prefer-ip-address: true
+        heartbeat:
+          enabled: false
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        tags:
+          - profile=${spring.profiles.active}

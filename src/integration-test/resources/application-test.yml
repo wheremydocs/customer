@@ -1,7 +1,6 @@
 server:
   port: 8080
 
-
 spring:
   application:
     name: customer
@@ -21,3 +20,15 @@ spring:
           envers:
             default_schema: audit
     database: postgresql
+
+  cloud:
+    consul:
+      enabled: false
+      config:
+        enabled: false
+        watch:
+          enabled: false
+      discovery:
+        enabled: false
+    discovery:
+      enabled: false
