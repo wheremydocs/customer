@@ -1,6 +1,5 @@
 package com.everydocs.customer.domain.type;
 
-import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.EnumType;
 
@@ -14,7 +13,7 @@ public class PostgresSQLEnumType extends EnumType {
   @Override
   public void nullSafeSet(
       PreparedStatement st, Object value, int index, SharedSessionContractImplementor session)
-      throws HibernateException, SQLException {
+      throws SQLException {
     if (value == null) {
       st.setNull(index, Types.OTHER);
     } else {

@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -78,7 +79,7 @@ public abstract class GenericMapper<E extends AuditableEntity, D> implements Map
   @Override
   public List<D> toDto(Collection<E> entityList) {
     if (entityList == null) {
-      return null;
+      return Collections.emptyList();
     }
     return entityList.stream()
         .map(this::toDto)
