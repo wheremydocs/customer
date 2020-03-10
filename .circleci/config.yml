@@ -26,7 +26,7 @@ jobs: # a collection of steps
       - run: ./gradlew integrationTest
       - run:
           name: Analyze on SonarCloud
-          command: ./gradlew sonarqube
+          command: ./gradlew jacocoTestReport sonarqube
       - save_cache:
           paths:
             - ~/.gradle/wrapper
