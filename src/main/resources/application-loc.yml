@@ -13,7 +13,7 @@ spring:
         show_sql: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer
+    url: jdbc:postgresql://localhost:5432/wheremydocs_customer
     username: postgres
     password: 8yR13
     hikari:

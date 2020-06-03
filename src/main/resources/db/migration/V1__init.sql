@@ -8,6 +8,7 @@ CREATE TABLE public.customer (
   username text unique,
   email text,
   gender public.gender_type,
+  birthday date,
   created timestamp without time zone,
   modified timestamp without time zone
 );
