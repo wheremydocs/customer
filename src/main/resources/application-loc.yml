@@ -1,6 +1,12 @@
 server:
   port: 8800
 
+logging:
+  level:
+    ROOT: INFO
+  pattern:
+    console: "%d{HH:mm:ss} %clr(%-5p) %clr(:){faint} %clr(%m){faint}%n"
+
 spring:
   jpa:
     properties:
@@ -13,7 +19,7 @@ spring:
         show_sql: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/wheremydocs_customer
+    url: jdbc:postgresql://localhost:54322/wheremydocs_customer
     username: postgres
     password: 8yR13
     hikari:

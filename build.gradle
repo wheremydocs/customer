@@ -1,41 +1,34 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.4.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-    id 'org.sonarqube' version '2.8'
+    id 'org.springframework.boot' version '2.3.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id "org.sonarqube" version "3.0"
     id 'jacoco'
     id 'java'
     id 'idea'
+
 }
 
 group = 'com.wheremydocs'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom developmentOnly
-    }
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-
-    integrationTestImplementation {
-        extendsFrom implementation
-    }
-    integrationTestRuntimeOnly {
-        extendsFrom runtimeOnly
-    }
-}
+defaultTasks 'bootRun'
 
 repositories {
+    mavenLocal()
     mavenCentral()
-    maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+    jcenter()
+}
+
+ext {
+    set('springCloudVersion', "Hoxton.SR8")
+    swaggerVersion = '2.10.5'
+    testcontainersVersion = '1.14.3'
 }
 
 dependencyManagement {
     imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Hoxton.RELEASE'
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 
@@ -50,21 +43,34 @@ sourceSets {
     }
 }
 
+configurations {
+    developmentOnly
+    runtimeClasspath { extendsFrom developmentOnly }
+    compileOnly { extendsFrom annotationProcessor }
+
+    integrationTestImplementation { extendsFrom implementation }
+    integrationTestRuntimeOnly { extendsFrom runtimeOnly }
+}
+
+springBoot {
+    buildInfo()
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.springframework.data:spring-data-envers"
-    implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.cloud:spring-cloud-starter-consul-discovery'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.springframework.data:spring-data-envers"
+    implementation 'org.postgresql:postgresql'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.modelmapper:modelmapper:2.3.5'
-    implementation 'io.springfox:springfox-swagger2:3.0.0-SNAPSHOT'
-    implementation 'io.springfox:springfox-data-rest:3.0.0-SNAPSHOT'
+
+    // Swagger
+    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
+    implementation "io.springfox:springfox-spring-webmvc:${swaggerVersion}"
+
     compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -72,8 +78,8 @@ dependencies {
     }
 
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
-    integrationTestImplementation "org.testcontainers:testcontainers:1.12.5"
-    integrationTestImplementation "org.testcontainers:postgresql:1.12.5"
+    integrationTestImplementation "org.testcontainers:testcontainers:${testcontainersVersion}"
+    integrationTestImplementation "org.testcontainers:postgresql:${testcontainersVersion}"
 }
 
 test {

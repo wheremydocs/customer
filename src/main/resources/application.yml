@@ -19,8 +19,12 @@ spring:
           envers:
             default_schema: audit
     database: postgresql
+    open-in-view: true
 
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     consul:
       enabled: true
       discovery:
