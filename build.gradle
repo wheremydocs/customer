@@ -22,7 +22,7 @@ repositories {
 
 ext {
     set('springCloudVersion', "Hoxton.SR8")
-    swaggerVersion = '2.10.5'
+    swaggerVersion = '3.0.0'
     testcontainersVersion = '1.14.3'
 }
 
