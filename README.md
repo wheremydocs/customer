@@ -1,0 +1,3 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=wheremydocs_customer&metric=alert_status)](https://sonarcloud.io/dashboard?id=wheremydocs_customer)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=wheremydocs_customer&metric=coverage)](https://sonarcloud.io/dashboard?id=wheremydocs_customer)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=wheremydocs_customer&metric=code_smells)](https://sonarcloud.io/dashboard?id=wheremydocs_customer)

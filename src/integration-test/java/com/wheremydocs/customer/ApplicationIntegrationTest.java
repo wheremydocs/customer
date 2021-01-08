@@ -11,11 +11,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class ApplicationIntegrationTest extends BaseIntegrationTest {
 
   @Test
-  public void contextLoads() {
-    // Check that context even loads
-  }
-
-  @Test
   public void healthy() throws Exception {
     //Given
     //When
