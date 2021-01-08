@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.5.RELEASE'
+    id 'org.springframework.boot' version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id "org.sonarqube" version "3.0"
     id 'jacoco'
@@ -21,9 +21,10 @@ repositories {
 }
 
 ext {
-    set('springCloudVersion', "Hoxton.SR8")
-    swaggerVersion = '2.10.5'
-    testcontainersVersion = '1.14.3'
+    springCloudVersion = "2020.0.0"
+    swaggerVersion = '3.0.0'
+    testcontainersVersion = '1.15.1'
+    modelmapperVersion = '2.3.9'
 }
 
 dependencyManagement {
@@ -64,11 +65,10 @@ dependencies {
     implementation "org.springframework.data:spring-data-envers"
     implementation 'org.postgresql:postgresql'
     implementation 'org.flywaydb:flyway-core'
-    implementation 'org.modelmapper:modelmapper:2.3.5'
+    implementation "org.modelmapper:modelmapper:${modelmapperVersion}"
 
     // Swagger
-    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
-    implementation "io.springfox:springfox-spring-webmvc:${swaggerVersion}"
+    implementation "io.springfox:springfox-boot-starter:${swaggerVersion}"
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

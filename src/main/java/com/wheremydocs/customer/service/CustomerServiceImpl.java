@@ -46,9 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerByQuerySp customerByQuerySp = new CustomerByQuerySp(search.getQuery());
     CustomerByUsernameSp customerByUsernameSp = new CustomerByUsernameSp(search.getUsername());
     Specification<Customer> combined = customerByIdsSp.and(customerByQuerySp);
-    if (combined != null) {
-      combined = combined.and(customerByUsernameSp);
-    }
+    combined = combined.and(customerByUsernameSp);
     return combined;
   }
 
