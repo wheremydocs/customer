@@ -1,10 +1,15 @@
 server:
   port: 8080
 
-
 spring:
   application:
     name: customer
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${auth.server.url}
 
   profiles:
     active: loc
