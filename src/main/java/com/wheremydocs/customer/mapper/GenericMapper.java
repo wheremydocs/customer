@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -17,11 +16,10 @@ import java.util.stream.Collectors;
 public abstract class GenericMapper<E extends AuditableEntity, D> implements Mapper<E, D> {
 
   @Setter
-  @Autowired
-  private ModelMapper mapper;
+  private ModelMapper mapper = new ModelMapper();
 
-  private Class<E> entityClass;
-  private Class<D> dtoClass;
+  private final Class<E> entityClass;
+  private final Class<D> dtoClass;
 
   public GenericMapper(Class<E> entityClass, Class<D> dtoClass) {
     this.entityClass = entityClass;
