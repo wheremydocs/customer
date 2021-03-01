@@ -23,7 +23,7 @@ repositories {
 ext {
     springCloudVersion = "2020.0.0"
     swaggerVersion = '3.0.0'
-    testcontainersVersion = '1.15.1'
+    testcontainersVersion = '1.15.2'
     modelmapperVersion = '2.3.9'
 }
 
