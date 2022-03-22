@@ -23,21 +23,20 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/public")
-@PreAuthorize("isAuthenticated()")
-public class CustomerController {
+@RequestMapping("/admin")
+@PreAuthorize("hasAnyAuthority('full-access', 'admin-access')")
+public class CustomerAdminController {
 
   private final CustomerService service;
   private final CustomerMapper mapper;
 
   @Autowired
-  public CustomerController(CustomerService service, CustomerMapper mapper) {
+  public CustomerAdminController(CustomerService service, CustomerMapper mapper) {
     this.service = service;
     this.mapper = mapper;
   }
 
   @GetMapping("/{id}")
-  //TODO: only me could view me
   public ResponseEntity<CustomerDto> findCustomerById(@PathVariable UUID id) {
     return service
         .findById(id)
@@ -46,8 +45,12 @@ public class CustomerController {
         .orElse(ResponseEntity.notFound().build());
   }
 
+  @GetMapping
+  public Page<CustomerDto> findCustomers(@Valid CustomerSearch search, Pageable page) {
+    return service.find(search, page).map(mapper::toDto);
+  }
+
   @PutMapping("/{id}")
-  //TODO: only me could edit me
   public ResponseEntity<CustomerDto> updateCustomer(
       @PathVariable UUID id, @RequestBody CustomerDto dto) {
     Customer customer = service.findById(id).orElse(null);

@@ -2,6 +2,11 @@ server:
   port: 8080
 
 spring:
+  data:
+    web:
+      pageable:
+        max-page-size: 200
+
   application:
     name: customer
 

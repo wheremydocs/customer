@@ -19,7 +19,7 @@ public class AuditableEntity {
   @CreatedDate
   private LocalDateTime created;
 
-  @Column(name = "modified")
+  @Column(name = "modified", nullable = false)
   @LastModifiedDate
   private LocalDateTime modified;
 }

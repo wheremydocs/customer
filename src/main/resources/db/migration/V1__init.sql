@@ -1,14 +1,12 @@
-create type public.gender_type as enum (
-    'MALE',
-    'FEMALE'
-);
-
-CREATE TABLE public.customer (
-  id uuid PRIMARY KEY,
-  username text unique,
-  email text,
-  gender public.gender_type,
-  birthday date,
-  created timestamp without time zone,
-  modified timestamp without time zone
+CREATE TABLE public.customer
+(
+    id         uuid PRIMARY KEY,
+    email      text unique           not null,
+    first_name text,
+    last_name  text,
+    gender     text,
+    birthday   date,
+    premium    boolean default false not null,
+    created    timestamp without time zone,
+    modified   timestamp without time zone
 );

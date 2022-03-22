@@ -1,18 +1,14 @@
 package com.wheremydocs.customer.domain;
 
 import com.wheremydocs.customer.domain.type.Gender;
-import com.wheremydocs.customer.domain.type.PostgresSQLEnumType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldNameConstants;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -24,23 +20,20 @@ import java.util.UUID;
 @Data
 @Entity
 @Audited
-@TypeDef(name = "pgsql_enum", typeClass = PostgresSQLEnumType.class)
 public class Customer extends AuditableEntity {
 
-  @Id
-  @GeneratedValue
-  private UUID id;
+  @Id private UUID id;
 
-  @NotBlank
-  private String username;
+  private String firstName;
 
-  @Email
-  private String email;
+  private String lastName;
 
-  @Type(type = "pgsql_enum")
+  @Email @NotBlank private String email;
+
   @Enumerated(EnumType.STRING)
   private Gender gender;
 
   private LocalDate birthday;
 
+  private boolean premium = false;
 }
