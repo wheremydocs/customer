@@ -1,4 +1,4 @@
-version: 2 # use CircleCI 2.0
+version: 2.1 # use CircleCI 2.0
 executorType: machine
 jobs: # a collection of steps
   build:
@@ -7,7 +7,7 @@ jobs: # a collection of steps
       _JAVA_OPTIONS: "-Xmx3g"
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202201-02
     steps: # a collection of executable commands
       - run: sudo apt-get update
       - run: sudo apt-get -y install openjdk-11-jdk
@@ -40,10 +40,8 @@ jobs: # a collection of steps
           path: build/test-results
       - store_artifacts: # Upload test results for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: build/test-results
-          when: always
       - store_artifacts:
           path: build/reports
-          when: always
 
 workflows:
   version: 2
