@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 public class ApplicationIntegrationTest extends BaseIntegrationTest {
@@ -18,17 +18,8 @@ public class ApplicationIntegrationTest extends BaseIntegrationTest {
 
     //Then
     int status = mvcResult.getResponse().getStatus();
-    assertEquals(HttpStatus.OK, HttpStatus.resolve(status));
+
+    assertThat(HttpStatus.resolve(status)).isEqualTo(HttpStatus.OK);
   }
 
-  @Test
-  public void swagger() throws Exception {
-    //Given
-    //When
-    MvcResult mvcResult = mvc.perform(get("/v2/api-docs")).andReturn();
-
-    //Then
-    int status = mvcResult.getResponse().getStatus();
-    assertEquals(HttpStatus.OK, HttpStatus.resolve(status));
-  }
 }

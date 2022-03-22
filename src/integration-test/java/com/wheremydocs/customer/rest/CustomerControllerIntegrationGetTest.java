@@ -10,9 +10,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,7 +26,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
 
     // Then
     int status = mvcResult.getResponse().getStatus();
-    assertEquals(HttpStatus.BAD_REQUEST, HttpStatus.resolve(status));
+    assertThat(HttpStatus.resolve(status)).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
   @Test
@@ -43,7 +41,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     CustomerDto customer =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), CustomerDto.class);
 
-    assertEquals(existingId, customer.getId());
+    assertThat(customer.getId()).isEqualTo(existingId);
   }
 
   @Test
@@ -56,7 +54,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
 
     // Then
     int status = mvcResult.getResponse().getStatus();
-    assertEquals(HttpStatus.NOT_FOUND, HttpStatus.resolve(status));
+    assertThat(HttpStatus.resolve(status)).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
   @Test
@@ -68,7 +66,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertFalse(customers.isEmpty());
+    assertThat(customers).isNotEmpty();
   }
 
   @Test
@@ -86,7 +84,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertTrue(customers.isEmpty());
+    assertThat(customers).isEmpty();
   }
 
   @Test
@@ -101,7 +99,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertFalse(customers.isEmpty());
+    assertThat(customers).isNotEmpty();
   }
 
   @Test
@@ -116,7 +114,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertFalse(customers.isEmpty());
+    assertThat(customers).isNotEmpty();
   }
 
   @Test
@@ -136,7 +134,7 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertEquals(3, customers.getTotalElements());
+    assertThat(customers.getTotalElements()).isEqualTo(3);
   }
 
   @Test
@@ -156,8 +154,8 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertEquals(1, customers.getTotalElements());
-    assertTrue(customers.stream().allMatch(dto -> dto.getId().toString().equals(ids[0])));
+    assertThat(customers.getTotalElements()).isEqualTo(1);
+    assertThat(customers).allMatch(dto -> dto.getId().toString().equals(ids[0]));
   }
 
   @Test
@@ -172,6 +170,6 @@ public class CustomerControllerIntegrationGetTest extends BaseIntegrationTest {
     // Then
     Page<CustomerDto> customers =
         mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<>() {});
-    assertEquals(1, customers.getTotalElements());
+    assertThat(customers.getTotalElements()).isEqualTo(1);
   }
 }
