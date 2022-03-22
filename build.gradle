@@ -24,7 +24,7 @@ ext {
     springCloudVersion = "2020.0.0"
     swaggerVersion = '3.0.0'
     testcontainersVersion = '1.15.1'
-    modelmapperVersion = '2.3.9'
+    modelmapperVersion = '3.1.0'
 }
 
 dependencyManagement {
